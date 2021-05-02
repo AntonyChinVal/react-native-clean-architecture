@@ -16,7 +16,7 @@ const wButton : FC<WButtonProps> = (props) => {
         <TouchableOpacity onPress={props.onPress} style={props.style}> 
             <View style={[styles.button]}>
                 <Text style={[styles.text]}>
-                    {props.title}
+                    {props.children? props.children : props.title}
                 </Text>
             </View>
         </TouchableOpacity>

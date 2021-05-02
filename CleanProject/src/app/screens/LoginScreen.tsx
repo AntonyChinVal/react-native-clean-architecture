@@ -1,52 +1,34 @@
-import React , { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import React , { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginTemplate from '../components/templates/loginTemplate/LoginTemplate';
-import { SessionTypeCreator, SessionActionCreator } from '../configuration/reduxStore/sessionReducer/Actions';
-import { ScreenNavigationProps } from '../configuration/navigation/ScreenTypes'
-import { GeneralState } from '../configuration/reduxStore/generalReducer/types';
+import { SessionActionCreator } from '../configuration/reduxStore/sessionReducer/Actions';
 import { AppState } from '../configuration/reduxStore/Store';
+import { GeneralState } from '../configuration/reduxStore/generalReducer/types';
 import { SessionState } from '../configuration/reduxStore/sessionReducer/types';
+import { useNavigation } from '@react-navigation/native';
+import { AuthStackProp } from '../configuration/navigation/AuthStack';
 
-interface LoginState {
+const LoginScreen = () => {
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation<AuthStackProp>()
+    const generalState : GeneralState = useSelector((state : AppState)=> state.general)
+    const sessionState : SessionState = useSelector((state : AppState)=> state.session)
+
+    const login =   useCallback(() =>{
+        dispatch(SessionActionCreator.login({email : '' , password : ''}, ()=>{
+            navigation.push("SuccessScreen");
+        }, ()=>{}))
+    },[])
+
+
+    return (
+        <LoginTemplate
+            loading={generalState.loading}
+            login={login}
+            userName={sessionState.user.name}
+        />
+    )
 }
 
-interface LoginProps extends ScreenNavigationProps{
-    general : GeneralState
-    session : SessionState
-    sessionDispatch : SessionTypeCreator
-}
-
-class LoginScreen extends Component<LoginProps, LoginState> {
-    state = {}
-
-    constructor(props) {
-        super(props);
-    }
-
-    login = () =>{
-        this.props.sessionDispatch.login({email : '' , password : ''}, ()=>{}, ()=>{});
-    }
-
-    render() {
-        return (
-            <LoginTemplate
-                loading={this.props.general.loading}
-                login={this.login}
-                userName={this.props.session.user.name}
-            />
-        );
-    }
-
-}
-
-const mapStateToProps = (state : AppState) => ({
-    general : state.general,
-    session : state.session
-}); 
-
-const mapDispatchToProps =  (dispatch: Dispatch) => ({
-    sessionDispatch: bindActionCreators(SessionActionCreator, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps )(LoginScreen);
+export default LoginScreen
