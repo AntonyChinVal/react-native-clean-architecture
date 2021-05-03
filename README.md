@@ -1,6 +1,6 @@
 # CleanReactNative
 
-A React Native project with Clean Architecture and Redux, [presentation](https://prezi.com/view/2xncUY8NeKriirGfcdUs/).
+A React Native project with Clean Architecture and Redux. **Link to project presentation, click [here](https://prezi.com/view/2xncUY8NeKriirGfcdUs/).**
 
 ## Installation
 
