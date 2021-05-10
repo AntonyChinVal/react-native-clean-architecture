@@ -19,8 +19,8 @@ export class LoginUseCaseImpl implements  LoginUseCase{
     async execute(params: LoginUseCaseParams): Promise<User> {
         let authRepository: AuthenticationRepository = container.get<AuthenticationRepository>(AUTHENTICATION_REPOSITORY)
         let userRepository: UserRepository = container.get<UserRepository>(USER_REPOSITORY)
-        let token : {token : string} = await authRepository.authenticate(params.email,params.password);
-        await AsyncStorage.setItem('token', token.token);
+        let token : string = await authRepository.authenticate(params.email,params.password);
+        await AsyncStorage.setItem('token', token);
         let user : User = await userRepository.getUser();
         return user;
     }

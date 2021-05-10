@@ -7,8 +7,8 @@ import ApiUrls from "../api/ApiUrls";
 @injectable()
 export default class AuthRepositoryImpl implements AuthenticationRepository{
 
-    authenticate(email: string, password: string): Promise<{ token: string }> {
-        return ApiService.jfetch<{ token: string }>(ApiUrls.URL_AUTH_AUTHENTICATE, {
+    authenticate(email: string, password: string): Promise<string> {
+        return ApiService.jfetch<string>(ApiUrls.URL_AUTH_AUTHENTICATE, {
             method : ApiService.HttpMethod.POST,
             body : {
                 email,

@@ -6,10 +6,9 @@ import {
   Platform,
 } from 'react-native';
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import AuthStack from './navigation/AuthStack'
 import { Provider } from 'react-redux';
 import store from './reduxStore/Store';
+import { RootStack } from './navigation';
 
 const App = () => {
   return (
@@ -17,9 +16,7 @@ const App = () => {
       <KeyboardAvoidingView style={{flex : 1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}> 
         <StatusBar barStyle="light-content" />
         <SafeAreaView style={{flex : 1}}>
-          <NavigationContainer>
-              <AuthStack/>
-          </NavigationContainer>
+              <RootStack/>
         </SafeAreaView>
       </KeyboardAvoidingView>
     </Provider>
